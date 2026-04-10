@@ -23,34 +23,33 @@ IntList::~IntList() {
     Node* curr = head;
 
     while (curr != nullptr) {
-        Node* next = curr->next;
-        delete curr;
-        curr = next;
+        Node* next = curr->next; // save next node
+        delete curr; // delete current node
+        curr = next; // traverse
     }
 
-    head = nullptr;
-    tail = nullptr;
+    head = tail = nullptr; // empty list, head = tail =nullptr
 }
 
 
 // return sum of values in list
 int IntList::sum() const {
-    Node* curr = head;
-    int sum(0);
-    while (curr!=NULL) {
-        sum += curr->info;
-        curr = curr->next;
+    Node* curr = head; // pointer to traverse list
+    int sum(0); // initialize sum at 0
+    while (curr!=NULL) { 
+        sum += curr->info; // increment sum
+        curr = curr->next; // traverse
     }
     return sum; 
 }
 
 // returns true if value is in the list; false if not
 bool IntList::contains(int value) const {
-    Node* curr = head;
+    Node* curr = head; // pointer to traverse list, start at head
     while (curr != NULL) {
-        if (curr->info == value)
+        if (curr->info == value) // check for val
             return true;
-        curr = curr->next;
+        curr = curr->next; // traverse
     }
     return false;
 }
@@ -58,15 +57,15 @@ bool IntList::contains(int value) const {
 // returns maximum value in list, or 0 if empty list
 int IntList::max() const 
 {
-    Node* curr = head;
+    Node* curr = head; // pointer to traverse list, start at head
     if (curr == NULL)
         return 0;
-    int max = curr->info;
-    while (curr!=NULL) 
+    int max = curr->info; // initialize to first node info
+    while (curr != NULL) 
     {
         if (curr->info > max)
-            max = curr->info;
-        curr = curr->next;
+            max = curr->info; // reassign max val if curr node info is larger than prev max
+        curr = curr->next; // travers
     }
     return max;
 }
@@ -74,40 +73,41 @@ int IntList::max() const
 // returns average (arithmetic mean) of all values, or
 // 0 if list is empty
 double IntList::average() const {
-    int n = count();
+    int n = count(); // use count() function
     if (n == 0)
         return 0.0;
-
-    return static_cast<double>(sum()) / n;
+    return static_cast<double>(sum()) / n; // use sum() function
 }
 
 // inserts value as new node at beginning of list
 void IntList::push_front(int value) {
-    Node* top = new Node;
-    top->next = head;
+    Node* top = new Node; // use new to create new memory in heap
+    top->next = head; // new node point to what head was pointing to
     top->info = value;
-    head = top;
+    head = top; // head should point to new node
+    if (tail == nullptr) // edge case: empty list
+        tail = top;
 }
 
 // append value at end of list
 void IntList::push_back(int value) {
-    Node* end = new Node;
-    end->info = value;
-    end->next = NULL;
-    if (tail != NULL) 
+    Node* end = new Node; // new to create new memory in heap
+    end->info = value; 
+    end->next = NULL; 
+    if (tail != NULL) // check if list is not empty
         tail->next = end;
     else 
-        head = end;
+        head = end; // edge case: empty list
     tail = end;
 }
 
 // return count of values
 int IntList::count() const {
-    Node* curr = head;
-    int count(0);
+    Node* curr = head; // pointer to traverse list
+    int count(0); // initialize count at 0
     while (curr!=NULL) {
-        count++;
-        curr = curr->next;
+        count++; 
+        curr = curr->next; // traverse
     }
     return count;
 }
@@ -136,7 +136,7 @@ IntList& IntList::operator=(const IntList& source){
 }
 
 // constructor sets up empty list
-IntList::IntList(){ 
+IntList::IntList(){ // *** how does one differentiate between a constructor and non-constructor, is it just the repeated class name?
     head = NULL; // empty list has no nodes so head and tail is NULL
     tail = NULL;
 }
